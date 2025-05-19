@@ -80,6 +80,18 @@ void delete_before(node *n)
     free(deleted);
 }
 
+node *delete_before_no_free(node *n)
+{
+    node *deleted = n->prev;
+
+    node *r = n;
+    node *l = n->prev->prev;
+
+    l->next = n;
+    r->prev = n;
+    return deleted;
+}
+
 void delete_after(node *n)
 {
     node *deleted = n->next;
@@ -92,6 +104,18 @@ void delete_after(node *n)
     free(deleted);
 }
 
+node *delete_after_no_free(node *n)
+{
+    node *deleted = n->next;
+
+    node *r = n->next->next;
+    node *l = n;
+
+    r->prev = n;
+    n->next = r;
+    return deleted;
+}
+
 void delete_between(node *l, node *r)
 {
     node *deleted = l->next;
@@ -99,6 +123,15 @@ void delete_between(node *l, node *r)
     l->next = deleted->next;
     r->prev = deleted->prev;
     free(deleted);
+}
+
+node *delete_between_no_free(node *l, node *r)
+{
+    node *deleted = l->next;
+
+    l->next = deleted->next;
+    r->prev = deleted->prev;
+    return deleted;
 }
 
 void move_next_to_front(node *n)
@@ -132,6 +165,14 @@ void print_linked_list_backward(void)
         t = t->prev;
     }
     printf(" %d\n", t->val);
+}
+
+void exchange_after(node *to_exchange_after_l, node *to_exchange_after_r)
+{
+    node *l = delete_after_no_free(to_exchange_after_l);
+    node *r = delete_after_no_free(to_exchange_after_r);
+    insert_after(to_exchange_after_l, r->val);
+    insert_after(to_exchange_after_r, l->val);
 }
 
 int main(void)
@@ -189,4 +230,12 @@ void examples(void)
     printf("move_next_to_front %d\n", to_move_next_to_front->val);
     move_next_to_front(to_move_next_to_front);
     print_linked_list_forward();
+
+    node *to_exchange_after_l = to_move_next_to_front;
+    node *to_exchange_after_r = two;
+    printf("exchange_after %d and %d\n", to_exchange_after_l->val, to_exchange_after_r->val);
+    exchange_after(to_exchange_after_l, to_exchange_after_r);
+    print_linked_list_forward();
+
+    printf("WARN: some functions left without examples\n");
 }
