@@ -133,25 +133,26 @@ void print_linked_list_backward(void)
 
 int main(void)
 {
-    // printf's reveal the errors, i need to correct them, and hopefully it will work
-    // it's cool because I learn a lot while doing this stuff
     init_linked_list();
-
     print_linked_list_forward();
 
     node *one = insert_between(head, end, 111);
     node *two = insert_between(one, end, 222);
     node *three = insert_between(two, end, 333);
     node *four = insert_between(three, end, 444);
+    node *five = insert_between(four, end, 555);
+    node *six= insert_between(five, end, 666);
 
-
+    printf("forward\n");
     print_linked_list_forward();
     printf("backward\n");
     print_linked_list_backward();
 
+    printf("insert after %d\n", two->val);
     node *middle_a = insert_after(two, 888);
     print_linked_list_forward();
 
+    printf("insert before %d\n", middle_a->val);
     node *middle_b = insert_before(middle_a, 777);
     print_linked_list_forward();
 
@@ -163,13 +164,11 @@ int main(void)
     delete_before(four);
     print_linked_list_forward();
 
-    printf("delete_between %d and %d\n", one->val, two->val);
-    // TODO: check this function, probably here is the error
-    delete_between(one, two);
+    printf("delete_between %d and %d\n", four->val, six->val);
+    delete_between(four, six);
     print_linked_list_forward();
 
-    printf("move_next_to_front %d\n", two->val);
-    move_next_to_front(two);
+    // move_next_to_front(two);
     print_linked_list_forward();
     return 0;
 }
