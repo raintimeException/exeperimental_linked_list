@@ -2,6 +2,10 @@
 #include <stdlib.h>
 #include <assert.h>
 
+#define RUN_EXAMPLES 1
+
+void examples(void);
+
 typedef struct node {
     int val;
     struct node *next;
@@ -130,10 +134,18 @@ void print_linked_list_backward(void)
     printf(" %d\n", t->val);
 }
 
-
 int main(void)
 {
+#if RUN_EXAMPLES
+    examples();
+#endif
+    return 0;
+}
+
+void examples(void)
+{
     init_linked_list();
+    printf("print_linked_list_forward()\n");
     print_linked_list_forward();
 
     node *one = insert_between(head, end, 111);
@@ -143,32 +155,38 @@ int main(void)
     node *five = insert_between(four, end, 555);
     node *six= insert_between(five, end, 666);
 
-    printf("forward\n");
     print_linked_list_forward();
-    printf("backward\n");
+    printf("print_linked_list_backward\n");
     print_linked_list_backward();
 
-    printf("insert after %d\n", two->val);
-    node *middle_a = insert_after(two, 888);
+    node *to_insert_after = two;
+    printf("to_insert_after %d\n", to_insert_after->val);
+    node *middle_a = insert_after(to_insert_after, 888);
     print_linked_list_forward();
 
-    printf("insert before %d\n", middle_a->val);
-    node *middle_b = insert_before(middle_a, 777);
+    node *to_insert_before = middle_a;
+    printf("insert_before %d\n", to_insert_before->val);
+    node *middle_b = insert_before(to_insert_before, 777);
     print_linked_list_forward();
 
-    printf("delete_after %d\n", one->val);
-    delete_after(one);
+    node *to_delete_after = middle_a;
+    printf("delete_after %d\n", to_delete_after->val);
+    delete_after(to_delete_after);
     print_linked_list_forward();
 
-    printf("delete_before %d\n", four->val);
-    delete_before(four);
+    node *to_delete_before = four;
+    printf("delete_before %d\n", to_delete_before->val);
+    delete_before(to_delete_before);
     print_linked_list_forward();
 
-    printf("delete_between %d and %d\n", four->val, six->val);
-    delete_between(four, six);
+    node *to_delete_betweeen_l = four;
+    node *to_delete_betweeen_r = six;
+    printf("delete_between %d and %d\n", to_delete_betweeen_l->val, to_delete_betweeen_r->val);
+    delete_between(to_delete_betweeen_l, to_delete_betweeen_r);
     print_linked_list_forward();
 
-    // move_next_to_front(two);
+    node *to_move_next_to_front = six;
+    printf("move_next_to_front %d\n", to_move_next_to_front->val);
+    move_next_to_front(to_move_next_to_front);
     print_linked_list_forward();
-    return 0;
 }
