@@ -4,8 +4,6 @@
 
 #define RUN_EXAMPLES 1
 
-void examples(void);
-
 typedef struct node {
     int val;
     struct node *next;
@@ -178,6 +176,7 @@ void exchange_after(node *to_exchange_after_l, node *to_exchange_after_r)
 int main(void)
 {
 #if RUN_EXAMPLES
+    void examples(void);
     examples();
 #endif
     return 0;
